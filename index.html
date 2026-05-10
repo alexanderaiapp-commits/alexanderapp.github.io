@@ -3,32 +3,319 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alexander AI</title>
+  <title>Alexander AI — ניהול לוח זמנים חכם</title>
   <meta name="google-site-verification" content="PASTE_CODE_HERE" />
+  <meta name="description" content="Alexander AI סורק צילומי מסך, מזהה משמרות ואירועים בעזרת בינה מלאכותית, ומוסיף אותם לגוגל קלנדר שלך באופן אוטומטי." />
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:#000; color:#fff; font-family:-apple-system,sans-serif;
-           display:flex; flex-direction:column; align-items:center;
-           justify-content:center; min-height:100vh; text-align:center; padding:40px; }
-    .logo { color:#D4AF37; font-size:28px; font-weight:900; letter-spacing:8px; margin-bottom:24px; }
-    h1 { font-size:36px; font-weight:900; margin-bottom:16px; }
-    h1 span { color:#D4AF37; }
-    p { color:#888; font-size:16px; line-height:1.7; max-width:500px; margin-bottom:32px; }
-    .links a { color:#D4AF37; margin:0 16px; font-size:14px; text-decoration:none; }
-    .badge { background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.3);
-             color:#D4AF37; font-size:11px; letter-spacing:3px; padding:6px 16px;
-             border-radius:20px; margin-bottom:24px; display:inline-block; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, 'Segoe UI', sans-serif;
+      direction: rtl;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo { color: #D4AF37; font-size: 20px; font-weight: 900; letter-spacing: 6px; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: #666;
+      font-size: 13px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #D4AF37; }
+
+    /* HERO */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      color: #D4AF37;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      padding: 7px 18px;
+      border-radius: 20px;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+    .hero h1 span { color: #D4AF37; }
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: #666;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto 48px;
+    }
+    .hero-cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: #D4AF37;
+      color: #000;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 16px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .btn-outline {
+      background: transparent;
+      color: #D4AF37;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 15px 32px;
+      border-radius: 50px;
+      border: 1px solid rgba(212,175,55,0.4);
+      text-decoration: none;
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid #111;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* FEATURES */
+    .features {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: #D4AF37;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      background: #0D0D0D;
+      border: 1px solid #1a1a1a;
+      border-radius: 20px;
+      padding: 32px 28px;
+    }
+    .feature-icon { font-size: 28px; margin-bottom: 16px; }
+    .feature-title { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .feature-desc { color: #666; font-size: 14px; line-height: 1.65; }
+
+    /* HOW IT WORKS */
+    .how {
+      max-width: 860px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+    .steps { display: flex; flex-direction: column; gap: 16px; margin-top: 48px; }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      background: #0D0D0D;
+      border: 1px solid #1a1a1a;
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .step-num {
+      color: #D4AF37;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      min-width: 36px;
+      margin-top: 2px;
+    }
+    .step-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .step-desc { color: #666; font-size: 14px; line-height: 1.6; }
+
+    /* PRIVACY STRIP */
+    .privacy-strip {
+      background: rgba(212,175,55,0.05);
+      border-top: 1px solid rgba(212,175,55,0.12);
+      border-bottom: 1px solid rgba(212,175,55,0.12);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .privacy-strip p {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 620px;
+      margin: 0 auto 16px;
+    }
+    .privacy-strip a {
+      color: #D4AF37;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 12px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: #333;
+      font-size: 13px;
+    }
+    footer a { color: #444; text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: #D4AF37; }
   </style>
 </head>
 <body>
-  <div class="logo">ALEXANDER</div>
-  <div class="badge">AI CALENDAR ASSISTANT</div>
-  <h1>הלוח זמנים שלך,<br><span>מנוהל אוטומטית.</span></h1>
-  <p>Alexander AI סורק צילומי מסך, מזהה משמרות ואירועים בעזרת בינה מלאכותית, ומוסיף אותם לגוגל קלנדר שלך באופן אוטומטי.</p>
-  <div class="links">
-    <a href="https://alexander-brain-104460042833.me-west1.run.app/privacy">מדיניות פרטיות</a>
-    <a href="https://alexander-brain-104460042833.me-west1.run.app/terms">תנאי שימוש</a>
-    <a href="mailto:alexanderaiapp@gmail.com">צור קשר</a>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">ALEXANDER</div>
+    <div class="nav-links">
+      <a href="https://alexander-brain-104460042833.me-west1.run.app/privacy">פרטיות</a>
+      <a href="https://alexander-brain-104460042833.me-west1.run.app/terms">תנאי שימוש</a>
+      <a href="mailto:alexanderaiapp@gmail.com">צור קשר</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Alexander AI · v1.1</div>
+    <h1>הלוח זמנים שלך,<br><span>מנוהל אוטומטית.</span></h1>
+    <p class="hero-sub">
+      Alexander AI סורק צילומי מסך, מזהה משמרות ואירועים בעזרת בינה מלאכותית,
+      ומוסיף אותם לגוגל קלנדר שלך — בלי שתצטרך לעשות כלום.
+    </p>
+    <div class="hero-cta-row">
+      <a href="https://apps.apple.com/app/alexander-ai/id6736620521" class="btn-primary">הורד ל-iPhone</a>
+      <a href="https://alexander-brain-104460042833.me-west1.run.app/privacy" class="btn-outline">מדיניות פרטיות</a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="section-label">מה אלכסנדר עושה</div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📸</div>
+        <div class="feature-title">סריקת צילומי מסך</div>
+        <p class="feature-desc">מזהה אוטומטית לוחות משמרות, הודעות WhatsApp ומיילים עם מידע על אירועים.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">בינה מלאכותית</div>
+        <p class="feature-desc">מחלץ תאריכים, שעות וכותרות בדיוק גבוה — גם מטקסט עברי לא מובנה.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">סנכרון אוטומטי</div>
+        <p class="feature-desc">מוסיף ישירות לגוגל קלנדר שלך עם צבעים, תזכורות וקטגוריות אישיות.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-title">התראות בזמן אמת</div>
+        <p class="feature-desc">שולח push notification מיד כשאירוע מזוהה ונוסף ליומן.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">פועל ברקע</div>
+        <p class="feature-desc">סורק אוטומטית כל שעה, גם כשהאפליקציה סגורה.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">פרטיות מלאה</div>
+        <p class="feature-desc">תמונות לא נשמרות בשרת. רק האירועים שחולצו מגיעים ליומן.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="section-label">איך זה עובד</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <div class="step-title">צלם מסך של לוח המשמרות שלך</div>
+          <p class="step-desc">WhatsApp, אפליקציית עבודה, מייל — כל פורמט.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <div class="step-title">Alexander מזהה ומחלץ אוטומטית</div>
+          <p class="step-desc">Gemini AI קורא את התמונה ומחלץ את כל האירועים, התאריכים והשעות.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <div class="step-title">הכל נוסף לגוגל קלנדר</div>
+          <p class="step-desc">האירועים נוספים עם הצבעים והקטגוריות שלך — ומקבל push עם אישור.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY STRIP -->
+  <div class="privacy-strip">
+    <p>
+      Alexander AI מחויב לפרטיותך. אנחנו לא שומרים תמונות, לא קוראים הודעות,
+      ולא מוכרים מידע. כל הנתונים מוצפנים ומאובטחים על Google Cloud.
+    </p>
+    <div>
+      <a href="https://alexander-brain-104460042833.me-west1.run.app/privacy">מדיניות פרטיות</a>
+      <a href="https://alexander-brain-104460042833.me-west1.run.app/terms">תנאי שימוש</a>
+      <a href="mailto:alexanderaiapp@gmail.com">צור קשר</a>
+    </div>
   </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>© 2025 Alexander AI · כל הזכויות שמורות</div>
+    <div style="margin-top:12px">
+      <a href="https://alexander-brain-104460042833.me-west1.run.app/privacy">Privacy Policy</a>
+      <a href="https://alexander-brain-104460042833.me-west1.run.app/terms">Terms of Service</a>
+      <a href="mailto:alexanderaiapp@gmail.com">alexanderaiapp@gmail.com</a>
+    </div>
+  </footer>
+
 </body>
 </html>
